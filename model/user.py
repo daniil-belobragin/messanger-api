@@ -8,4 +8,9 @@ class User(Base, SerializerMixin):
 
     id = Column(String, primary_key=True)
     name = Column(String)
-    photo_color = Column(String)
+    icon_color = Column(String)
+
+    def __init__(self, u_id, name, icon_color):
+        self.id = u_id
+        self.name = name
+        self.icon_color = icon_color

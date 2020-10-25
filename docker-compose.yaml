@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+
+  db:
+    image: postgres
+    env_file: .env
+    ports:
+      - 6666:5432
+    networks:
+      - new_network
+    restart: always
+
+  messanger:
+    build: .
+    ports:
+      - 1010:2020
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - new_network
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python3 app.py'
+
+networks:
+  new_network:
